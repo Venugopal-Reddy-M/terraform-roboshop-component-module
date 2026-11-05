@@ -28,13 +28,19 @@ resource "terraform_data" "main" {
     source      = "bootstrap.sh" # Local file path
     destination = "/tmp/bootstrap.sh"    # Destination path on the remote machine
   }
-
-  provisioner "remote-exec" {
+    provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh ${var.component} ${var.environment} ${var.app_version}"
+        "sudo sh /tmp/bootstrap.sh catalogue ${var.environment} ${var.environment}"
     ]
   }
+
+#   provisioner "remote-exec" {
+#     inline = [
+#         "chmod +x /tmp/bootstrap.sh",
+#         "sudo sh /tmp/bootstrap.sh ${var.component} ${var.environment} ${var.app_version}"
+#     ]
+#   }
 }
 
 resource "aws_ec2_instance_state" "main" {
